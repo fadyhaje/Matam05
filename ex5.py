@@ -9,9 +9,9 @@ class CaesarCipher:
         for i in range(length):
             if isalpha(str[i]):
                 if self.k>=0:
-                    new_str.append(str[i]+k%26)
+                    new_str.append(str[i]+self.k%26)
                 else:
-                    temp=(-k)%26
+                    temp=(-self.k)%26
                     temp=temp+26
                     new_str.append(str[i]+temp%26);
         return new_str
