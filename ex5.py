@@ -21,8 +21,6 @@ class CaesarCipher:
         self.k=-self.k
         return new_str
 
-
-
 class VigenereCipher:
     def __init__(self,k):
             self.k=[elem for elem in k]
