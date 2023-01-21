@@ -9,9 +9,9 @@ class CaesarCipher:
         for i in range(length):
             if isalpha(str[i]):
                 if self.k>=0:
-                    new_str.append(str[i]+self.k%26)
+                    new_str.append(str[i]+k%26)
                 else:
-                    temp=(-self.k)%26
+                    temp=(-k)%26
                     temp=temp+26
                     new_str.append(str[i]+temp%26);
         return new_str
@@ -23,7 +23,7 @@ class CaesarCipher:
 
 
 
-class CaesarCipher:
+class VigenereCipher:
     def __init__(self,k):
             self.k=[elem for elem in k]
     def encrypt(self,str):
@@ -49,3 +49,11 @@ class CaesarCipher:
                 new_str.append(cesar.decrypt(str[i]))
                 counter++;
         return new_str
+        
+def getVigenereFromStr(str):
+    temp_k=[]
+    for elem in str:
+        if isalpha(elem):
+            number=ord(elem) # char to int
+            temp_k.append(number)
+    return VigenereCipher(temp_k)
