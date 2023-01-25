@@ -59,8 +59,8 @@ def getVigenereFromStr(str):
     
     
     
-def processDirectory(dir_path::str)   
-    config_path=os.path.join(dir_path,config.json)
+def processDirectory(str)   
+    config_path=os.path.join(str,config.json)
     with open (config_path,'r') as f:
         loaded_config=json.load(f)
     key=loaded_config['key']
@@ -70,9 +70,9 @@ def processDirectory(dir_path::str)
         obj=Caesar(key)
     mode=loaded_config['mode']
     
-    for file in os.listdir(dir_path)    
+    for file in os.listdir(str)    
         if not file==config.json
-            with open(file,'r')  as new_f
+            with open(file,'r')  as f
             temp_str=f.read()
             if mode=="encrypt" and (os.path.splitext(file)[1]==".txt")
                 new_f=os.path.join(os.path.split(file)[0],(os.path.split(file)[1]+".enc")
