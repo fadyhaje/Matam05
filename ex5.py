@@ -59,12 +59,6 @@ def getVigenereFromStr(str):
     
     
     
-def turn_ch_to_num(elem)
-    if 'a'<=elem<='z' 
-        return elem-'a'
-    elif  'A'<=elem<='Z'
-        return elem-'A'-('z'-'a')+1
-            
 def processDirectory(dir_path::str)   
     config_path=os.path.join(dir_path,config.json)
     with open (config_path,'r') as f:
