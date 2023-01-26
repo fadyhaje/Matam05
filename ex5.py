@@ -24,7 +24,7 @@ class CaesarCipher:
 
 class VigenereCipher:
     def __init__(self,k):
-            self.k=[elem for elem in k]
+        self.k=[elem for elem in k]
     def encrypt(self,str):
         length=(len(str))
         counter=0
@@ -48,7 +48,7 @@ class VigenereCipher:
                 new_str.append(cesar.decrypt(str[i]))
                 counter+=1;
         return new_str
-        
+
 def getVigenereFromStr(str):
     temp_k=[]
     for elem in str:
@@ -56,30 +56,30 @@ def getVigenereFromStr(str):
             number=ord(elem) # char to int
             temp_k.append(number)
     return VigenereCipher(temp_k)
-    
-    
-    
-def processDirectory(str)   
+
+
+
+def processDirectory(str):
     config_path=os.path.join(str,config.json)
     with open (config_path,'r') as f:
         loaded_config=json.load(f)
     key=loaded_config['key']
-    if  loaded_config['type']=='Vigenere'
+    if  loaded_config['type']=='Vigenere':
         obj=VigenereCipher(key)
-    else  
+    else:
         obj=Caesar(key)
     mode=loaded_config['mode']
-    
-    for file in os.listdir(str)    
-        if not file==config.json
-            with open(file,'r')  as f
-            temp_str=f.read()
-            if mode=="encrypt" and (os.path.splitext(file)[1]==".txt")
+
+    for file in os.listdir(str):
+        if not file==config.json:
+            with open (file,'r')  as f:
+                temp_str=f.read()
+            if mode=="encrypt" and (os.path.splitext(file)[1]==".txt"):
                 new_f=os.path.join(os.path.split(file)[0],(os.path.split(file)[1]+".enc")
-                with open(new_f,'w')  as f 
-                f.write(obj.encrypt(temp_str))
-            elif mode=="decrypt" and (os.path.splitext(file)[1]==".enc") 
+                with open (new_f,'w')  as c:
+                    c.write(obj.encrypt(temp_str))
+            elif mode=="decrypt" and (os.path.splitext(file)[1]==".enc"):
                 new_f=os.path.split(file)[1]+".txt"
-                with open(new_f,'w')  as f 
-                f.write(obj.decrypt(temp_str))
+                with open(new_f,'w')  as f:
+                    f.write(obj.decrypt(temp_str))
     return None                                   
