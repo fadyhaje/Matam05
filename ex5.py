@@ -4,14 +4,15 @@ import os
 import sys
 import json
 
-def abc_moving(str,index):
-    counter=0
-    for i in range(index):
-        counter+=1
-        if counter==26:
-            counter=0
-    return counter
 
+def changeStr(str,k):
+    twenty6=(ord('Z')-ord('A')+1)
+    if(str<='Z' and str>='A'):
+        return chr(ord('A')+(ord(str)-ord('A')+k)%twenty6)
+    elif (str<='z' and str>='a'):
+        return chr(ord('a')+(ord(str)-ord('a')+k)%twenty6)
+    else :
+        return str
 
 class CaesarCipher:
     def __init__(self,k):
@@ -20,13 +21,8 @@ class CaesarCipher:
         length=(len(str))
         new_str=""
         for i in range(length):
-            if str[i].isalpha():
-                if self.k>=0:
-                    new_str+=chr(ord(str[i])+abc_moving(str,self.k))
-                else:
-                    temp=(-self.k)%26
-                    temp=temp+26
-                    new_str+=chr(ord(str[i])-abc_moving(str,temp))
+           new_str+=changeStr(str[i],self.k)
+
         return new_str
     def decrypt(self,str):
         self.k=-self.k
@@ -43,22 +39,18 @@ class VigenereCipher:
         cesar=CaesarCipher(0)
         new_str=""
         for i in range(length):
-            if str[i].isalpha():
-                cesar.k=self.k[counter%len(self.k)]
-                new_str+=cesar.encrypt(str[i])
-                counter+=1;
+            cesar.k=self.k[counter%len(self.k)]
+            new_str+=cesar.encrypt(str[i])
+            if(str[i].isalpha()):
+                counter+=1
         return new_str
     def decrypt(self,str):
         temp_k=[-element for element in self.k]
-        length=(len(str))
-        counter=0
-        cesar=CaesarCipher(0)
+
+        cesar=VigenereCipher([])
         new_str=""
-        for i in range(length):
-            if str[i].isalpha():
-                cesar.k=temp_k[counter%len(self.k)]
-                new_str+=cesar.decrypt(str[i])
-                counter+=1;
+        cesar.k=temp_k
+        new_str+=cesar.encrypt(str)
         return new_str
 
 def getVigenereFromStr(str):
