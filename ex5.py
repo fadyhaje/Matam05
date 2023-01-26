@@ -1,6 +1,8 @@
 # Online Python compiler (interpreter) to run Python online.
 # Write Python 3 code in this online editor and run it.
 import os
+import sys
+import json
 class CaesarCipher:
     def __init__(self,k):
         self.k=k
@@ -8,11 +10,11 @@ class CaesarCipher:
         length=(len(str))
         new_str=[]
         for i in range(length):
-            if isalpha(str[i]):
+            if str[i].isalpha():
                 if self.k>=0:
-                    new_str.append(str[i]+k%26)
+                    new_str.append(str[i]+self.k%26)
                 else:
-                    temp=(-k)%26
+                    temp=(-self.k)%26
                     temp=temp+26
                     new_str.append(str[i]+temp%26);
         return new_str
@@ -60,26 +62,27 @@ def getVigenereFromStr(str):
 
 
 def processDirectory(str):
-    config_path=os.path.join(str,config.json)
+    config_path=os.path.join(str,"config.json")
     with open (config_path,'r') as f:
         loaded_config=json.load(f)
     key=loaded_config['key']
     if  loaded_config['type']=='Vigenere':
         obj=VigenereCipher(key)
     else:
-        obj=Caesar(key)
+        obj=CaesarCipher(key)
     mode=loaded_config['mode']
 
     for file in os.listdir(str):
-        if not file==config.json:
-            with open (file,'r')  as f:
+        if not file=="config.json" :
+            file_path=os.path.join(str,file)
+            with open (file_path,'r')  as f:
                 temp_str=f.read()
-            if mode=="encrypt" and (os.path.splitext(file)[1]==".txt"):
-                new_f=os.path.join(os.path.dirname(file),os.path.split(file)[1]+".enc")
+            if mode=="encrypt" and (os.path.splitext(file_path)[1]==".txt"):
+                new_f=os.path.join(os.path.dirname(file_path),os.path.split(file_path)[1]+".enc")
                 with open (new_f, 'w')  as f :
                     f.write(obj.encrypt(temp_str))
-            elif mode=="decrypt" and os.path.splitext(file)[1]==".enc" :
-                new_f=os.path.split(file)[1]+".txt"
+            elif mode=="decrypt" and os.path.splitext(file_path)[1]==".enc" :
+                new_f=os.path.split(file_path)[1]+".txt"
                 with open (new_f, 'w')  as f:
                     f.write(obj.decrypt(temp_str))
     return None
