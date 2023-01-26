@@ -8,15 +8,15 @@ class CaesarCipher:
         self.k=k
     def encrypt(self,str):
         length=(len(str))
-        new_str=[]
+        new_str=""
         for i in range(length):
             if str[i].isalpha():
                 if self.k>=0:
-                    new_str.append(str[i]+self.k%26)
+                    new_str+=str[i]+self.k%26
                 else:
                     temp=(-self.k)%26
                     temp=temp+26
-                    new_str.append(str[i]+temp%26);
+                    new_str+=str[i]+temp%26
         return new_str
     def decrypt(self,str):
         self.k=-self.k
@@ -31,11 +31,11 @@ class VigenereCipher:
         length=(len(str))
         counter=0
         cesar=CesarCipher(0)
-        new_str=[]
+        new_str=""
         for i in range(length):
             if isalpha(str[i]):
                 cesar.k=self.k[counter%len(self.k)]
-                new_str.append(cesar.encrypt(str[i]))
+                new_str+=cesar.encrypt(str[i])
                 counter+=1;
         return new_str
     def decrypt(self,str):
@@ -43,20 +43,20 @@ class VigenereCipher:
         length=(len(str))
         counter=0
         cesar=CesarCipher(0)
-        new_str=[]
+        new_str=""
         for i in range(length):
             if isalpha(str[i]):
                 cesar.k=stemp_k[counter%len(self.k)]
-                new_str.append(cesar.decrypt(str[i]))
+                new_str+=cesar.decrypt(str[i])
                 counter+=1;
         return new_str
 
 def getVigenereFromStr(str):
-    temp_k=[]
+    temp_k=""
     for elem in str:
         if isalpha(elem):
             number=ord(elem) # char to int
-            temp_k.append(number)
+            temp_k+=number
     return VigenereCipher(temp_k)
 
 
