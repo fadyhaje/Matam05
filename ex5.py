@@ -7,7 +7,7 @@ import json
 def abc_moving(str,index):
     counter=0
     for i in range(index):
-        counter++
+        counter+=1
         if counter==26:
             counter=0
     return counter
@@ -30,7 +30,7 @@ class CaesarCipher:
         return new_str
     def decrypt(self,str):
         self.k=-self.k
-        new_str=encrypt(str)
+        new_str=self.encrypt(str)
         self.k=-self.k
         return new_str
 
@@ -40,23 +40,23 @@ class VigenereCipher:
     def encrypt(self,str):
         length=(len(str))
         counter=0
-        cesar=CesarCipher(0)
+        cesar=CaesarCipher(0)
         new_str=""
         for i in range(length):
-            if isalpha(str[i]):
+            if str[i].isalpha():
                 cesar.k=self.k[counter%len(self.k)]
                 new_str+=cesar.encrypt(str[i])
                 counter+=1;
         return new_str
     def decrypt(self,str):
-        temp_k=[-elemnt for element in self.k]
+        temp_k=[-element for element in self.k]
         length=(len(str))
         counter=0
-        cesar=CesarCipher(0)
+        cesar=CaesarCipher(0)
         new_str=""
         for i in range(length):
-            if isalpha(str[i]):
-                cesar.k=stemp_k[counter%len(self.k)]
+            if str[i].isalpha():
+                cesar.k=temp_k[counter%len(self.k)]
                 new_str+=cesar.decrypt(str[i])
                 counter+=1;
         return new_str
@@ -88,11 +88,11 @@ def processDirectory(str):
             with open (file_path,'r')  as f:
                 temp_str=f.read()
             if mode=="encrypt" and (os.path.splitext(file_path)[1]==".txt"):
-                new_f=os.path.join(os.path.dirname(file_path),os.path.split(file_path)[1]+".enc")
+                new_f=os.path.join(str,os.path.split(file_path)[1]+".enc")
                 with open (new_f, 'w')  as f :
                     f.write(obj.encrypt(temp_str))
-             elif mode=="decrypt" and os.path.splitext(file_path)[1]==".enc" :
-                new_f=os.path.join(os.path.dirname(file_path),os.path.split(file_path)[1]+".txt")
+            elif mode=="decrypt" and os.path.splitext(file_path)[1]==".enc" :
+                new_f=os.path.join(str,os.path.split(file_path)[1]+".txt")
                 with open (new_f, 'w')  as f:
                     f.write(obj.decrypt(temp_str))
     return None
