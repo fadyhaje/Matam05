@@ -3,6 +3,16 @@
 import os
 import sys
 import json
+
+def abc_moving(str,index):
+    counter=0
+    for i in range(index):
+        counter++
+        if counter==26:
+            counter=0
+    return counter
+
+
 class CaesarCipher:
     def __init__(self,k):
         self.k=k
@@ -12,11 +22,11 @@ class CaesarCipher:
         for i in range(length):
             if str[i].isalpha():
                 if self.k>=0:
-                    new_str+=str[i]+self.k%26
+                    new_str+=str[i]+abc_moving(str,self.k)
                 else:
                     temp=(-self.k)%26
                     temp=temp+26
-                    new_str+=str[i]+temp%26
+                    new_str+=str[i]+abc_moving(str,temp)
         return new_str
     def decrypt(self,str):
         self.k=-self.k
