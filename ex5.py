@@ -81,8 +81,8 @@ def processDirectory(str):
                 new_f=os.path.join(os.path.dirname(file_path),os.path.split(file_path)[1]+".enc")
                 with open (new_f, 'w')  as f :
                     f.write(obj.encrypt(temp_str))
-            elif mode=="decrypt" and os.path.splitext(file_path)[1]==".enc" :
-                new_f=os.path.split(file_path)[1]+".txt"
+             elif mode=="decrypt" and os.path.splitext(file_path)[1]==".enc" :
+                new_f=os.path.join(os.path.dirname(file_path),os.path.split(file_path)[1]+".txt")
                 with open (new_f, 'w')  as f:
                     f.write(obj.decrypt(temp_str))
     return None
