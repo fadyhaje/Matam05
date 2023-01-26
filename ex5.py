@@ -22,11 +22,11 @@ class CaesarCipher:
         for i in range(length):
             if str[i].isalpha():
                 if self.k>=0:
-                    new_str+=str[i]+abc_moving(str,self.k)
+                    new_str+=chr(ord(str[i])+abc_moving(str,self.k))
                 else:
                     temp=(-self.k)%26
                     temp=temp+26
-                    new_str+=str[i]+abc_moving(str,temp)
+                    new_str+=chr(ord(str[i])-abc_moving(str,temp))
         return new_str
     def decrypt(self,str):
         self.k=-self.k
