@@ -71,7 +71,7 @@ def processDirectory(str):
         loaded_config=json.load(f)
     key=loaded_config['key']
     if  loaded_config['type']=='Vigenere':
-        if type(key)==type(''):
+        if type(key) is str:
             obj=getVigenereFromStr(key)
         else:
             obj=VigenereCipher(key)
@@ -82,14 +82,15 @@ def processDirectory(str):
     for file in os.listdir(str):
         if not file=="config.json" :
             file_path=os.path.join(str,file)
-            with open (file_path,'r',encoding="utf-8")  as f:
-                temp_str=f.read()
-            if mode=="encrypt" and (os.path.splitext(file_path)[1]=='.txt'):
-                new_f=(os.path.splitext(file_path)[0]+'.enc')
-                with open (new_f, 'w')  as d :
-                    d.write(obj.encrypt(temp_str))
-            elif mode=="decrypt" and (os.path.splitext(file_path)[1]=='.enc') :
-                new_f=(os.path.splitext(file_path)[0]+'.txt')
-                with open (new_f, 'w')  as c:
-                    c.write(obj.decrypt(temp_str))
+            if os.path.isfile(file_path):
+                with open (file_path,'r')  as f:
+                    temp_str=f.read()
+                if mode=="encrypt" and (os.path.splitext(file_path)[1]=='.txt'):
+                    new_f=(os.path.splitext(file_path)[0]+'.enc')
+                    with open (new_f, 'w')  as d :
+                        d.write(obj.encrypt(temp_str))
+                elif mode=="decrypt" and (os.path.splitext(file_path)[1]=='.enc') :
+                    new_f=(os.path.splitext(file_path)[0]+'.txt')
+                    with open (new_f, 'w')  as c:
+                        c.write(obj.decrypt(temp_str))
     return None
